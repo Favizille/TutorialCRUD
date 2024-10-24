@@ -11,6 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/tutorials', [TutorialController::class, 'index']);
 Route::post('/tutorial/create',[TutorialController::class, 'store']);
-Route::get('/tutotrial/{id}', [TutorialController::class,'show']);
+Route::get('/tutorial/{id}', [TutorialController::class,'show']);
 Route::put('/tutorial/{id}', [TutorialController::class,'update']);
 Route::delete('/tutorial/{id}',[TutorialController::class,'destroy']);

@@ -69,7 +69,7 @@ class TutorialController extends Controller
      */
     public function show(string $id)
     {
-        $tutorial = $this->tutorial->findOrFail($id);
+        $tutorial = $this->tutorial->find($id);
 
         if(!$tutorial){
             return response()->json([
@@ -91,6 +91,17 @@ class TutorialController extends Controller
     public function update(TutorialRequest $request, string $id)
     {
         $validatedData = $request->validated();
+        if ($validatedData['published'] === 'true' || 
+        $validatedData['published'] === 'True' || 
+        $validatedData['published'] === 'TRUE' || 
+        $validatedData['published'] === 'T') 
+        {
+            $validatedData['published'] = true;
+        } 
+        else{
+            $validatedData['published'] = false;
+       }
+
         $tutorial = $this->tutorial->findOrFail($id);
 
         if(!$tutorial){
@@ -110,7 +121,7 @@ class TutorialController extends Controller
         return response()->json([
             "status" => 'success',
             "message" => "Tutorial Updated",
-            "data" => $updatedTutorial
+            "data" => $tutorial
         ], 200);
     }
 
@@ -119,7 +130,7 @@ class TutorialController extends Controller
      */
     public function destroy(string $id)
     {
-        $tutorial = $this->tutorial->findOrFail($id);
+        $tutorial = $this->tutorial->find($id);
 
         if(!$tutorial){
             return response()->json([
@@ -133,7 +144,7 @@ class TutorialController extends Controller
         return response()->json([
             "status" => 'success',
             "message" => "Tutorial Deleted",
-            "data" => $deletedTutorial
+            "data" => $tutorial
         ], 200);
     }
 }
